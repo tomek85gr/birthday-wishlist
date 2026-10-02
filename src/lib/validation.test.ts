@@ -1,0 +1,4 @@
+import {describe,it,expect} from "vitest";import {emailSchema,retailerForUrl,slugSchema} from "./validation";
+describe("email validation",()=>{it("accepts a valid email",()=>expect(emailSchema.safeParse("guest@example.org").success).toBe(true));it("rejects invalid email",()=>expect(emailSchema.safeParse("nope").success).toBe(false))});
+describe("retailer detection",()=>{it("recognizes retailer host names only",()=>{expect(retailerForUrl("https://www.skroutz.gr/s/123")).toBe("skroutz");expect(retailerForUrl("https://jumbo.gr/item")).toBe("jumbo");expect(retailerForUrl("https://notjumbo.gr/item")).toBe("other")})});
+describe("slug validation",()=>{it("accepts birthday slugs and rejects paths",()=>{expect(slugSchema.safeParse("nefelis-genethlia").success).toBe(true);expect(slugSchema.safeParse("../admin").success).toBe(false)})});

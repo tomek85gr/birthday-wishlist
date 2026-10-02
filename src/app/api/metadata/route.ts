@@ -1,0 +1,2 @@
+import {NextResponse} from "next/server";import {previewMetadata} from "@/lib/metadata";import {httpUrlSchema} from "@/lib/validation";
+export async function POST(req:Request){try{const body=await req.json(),parsed=httpUrlSchema.safeParse(body.url);if(!parsed.success)return NextResponse.json({ok:false},{status:400});return NextResponse.json(await previewMetadata(parsed.data))}catch{return NextResponse.json({ok:false},{status:400})}}

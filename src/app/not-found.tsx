@@ -1,0 +1,1 @@
+export default function NotFound(){return <main className="grid min-h-screen place-items-center px-6 text-center"><div><div className="mx-auto grid size-16 place-items-center rounded-full bg-[#fff1e8] text-3xl">🎈</div><h1 className="serif mt-5 text-3xl">Δεν βρήκαμε αυτή την πρόσκληση</h1><p className="mt-3 text-[#72788a]">Έλεγξε τον σύνδεσμο και δοκίμασε ξανά.</p></div></main>}
