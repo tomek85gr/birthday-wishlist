@@ -10,7 +10,7 @@ function toJpeg(canvas: HTMLCanvasElement, quality: number) {
   return new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", quality));
 }
 
-export function InvitationImageUpload({ initialValue = "" }: { initialValue?: string }) {
+export function InvitationImageUpload({ initialValue = "", name = "childImageUrl", label = "Φωτογραφία πρόσκλησης (προαιρετικό)" }: { initialValue?: string; name?: string; label?: string }) {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -72,8 +72,8 @@ export function InvitationImageUpload({ initialValue = "" }: { initialValue?: st
   }
 
   return <div className="grid gap-2 text-sm font-medium sm:col-span-2">
-    <span>Φωτογραφία πρόσκλησης (προαιρετικό)</span>
-    <input type="hidden" name="childImageUrl" value={value} />
+    <span>{label}</span>
+    <input type="hidden" name={name} value={value} />
     <input ref={inputRef} type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => void chooseImage(event.target.files?.[0])} className="min-h-11 rounded-xl border border-stone-300 bg-white px-3 py-2 font-normal file:mr-3 file:rounded-full file:border-0 file:bg-[#f2ecfa] file:px-3 file:py-1 file:font-semibold file:text-[#625887]" aria-label="Ανέβασε φωτογραφία πρόσκλησης" />
     <span className="text-xs font-normal text-[#777b86]">PNG, JPG ή WebP · έως 15 MB (η εικόνα μικραίνει αυτόματα)</span>
     {busy && <span role="status" className="text-xs text-[#625887]">Επεξεργασία εικόνας…</span>}

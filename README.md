@@ -79,7 +79,7 @@ npm run build
 - The public gift query does not select `claimed_by_email`.
 - Admin mutations check the birthday's high entropy secret on the server.
 - Metadata preview fetches standard HTML metadata only, validates redirects and public IPs, and caps response size and request time.
-- Invitation images can be uploaded as PNG, JPG, or WebP. The browser resizes them to a small JPEG and stores the image in D1, so no separate image-hosting account is needed.
+- Birthday and gift images can be uploaded as PNG, JPG, or WebP. The browser resizes them to a small JPEG and stores each image in D1, so no separate image-hosting account is needed.
 - Admins can clear reservation emails without clearing a gift's claimed status.
 
 The app does not process payments, verify purchases, send email, or collect marketing consent. D1's free tier has service limits; check Cloudflare's current [D1 limits](https://developers.cloudflare.com/d1/reference/faq/) before a large event or public launch.
