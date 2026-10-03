@@ -16,7 +16,7 @@ The app uses Cloudflare D1, a hosted SQLite database, through Cloudflare's serve
 ## Create the D1 database
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), create a D1 database named `birthday-wishlist`.
-2. Open the database's **Console** and run the SQL files in `db/migrations/` in numeric order (`0001_initial.sql`, then `0002_allow_manual_gift_entries.sql`). If this database already has migration 0001 applied, run only migration 0002; it preserves existing gifts.
+2. Open the database's **Console** and run the SQL files in `db/migrations/` in numeric order (`0001_initial.sql`, then `0002_allow_manual_gift_entries.sql`, then `0003_add_co_buyer_email.sql`). If this database already has migration 0002 applied, run only migration 0003; it preserves existing gifts and reservations.
 3. In your Cloudflare profile, create an API token with **Account → D1 → Read and Write** permissions, scoped to the account that owns this database. Store the token as a secret.
 4. Copy the Cloudflare account ID and database UUID from the dashboard.
 
@@ -57,7 +57,7 @@ The development script is `"dev": "next dev --port 8001"` in `package.json`. Ope
 1. Create a GitHub repository and push this project to it.
 2. In Vercel, choose **Add New → Project**, import the GitHub repository, and keep the default Next.js build settings.
 3. In Vercel project settings, add `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_D1_DATABASE_ID`, and `CLOUDFLARE_API_TOKEN`. Add `NEXT_PUBLIC_SITE_URL` with the Vercel production URL, such as `https://your-project.vercel.app`. Keep the API token server-only.
-4. In Cloudflare D1's **Console**, apply any migration files not yet run, in numeric order. For a database that already ran `0001_initial.sql`, run `0002_allow_manual_gift_entries.sql` to enable optional gift links and uploaded gift images.
+4. In Cloudflare D1's **Console**, apply any migration files not yet run, in numeric order. For a database that already ran `0001_initial.sql`, run `0002_allow_manual_gift_entries.sql` to enable optional gift links and uploaded gift images, then `0003_add_co_buyer_email.sql` to allow an optional co-buyer reservation email.
 5. Deploy from Vercel. Open the deployed site, create a birthday page, then use its admin link to add gifts. Share the public birthday URL with guests and keep the admin URL private.
 6. Optional: run `npm run seed` locally with the production D1 environment variables to add the demo birthday. This writes to the live database and resets any existing demo gifts.
 
