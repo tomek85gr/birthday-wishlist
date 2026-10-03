@@ -10,6 +10,7 @@ export function ClaimDialog({ giftId, title, imageUrl, priceText, updatedAt }: {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [coBuyerEmail, setCoBuyerEmail] = useState("");
+  const [showCoBuyerEmail, setShowCoBuyerEmail] = useState(false);
   const [status, setStatus] = useState<ClaimStatus>("");
   const [claimed, setClaimed] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -74,8 +75,12 @@ export function ClaimDialog({ giftId, title, imageUrl, priceText, updatedAt }: {
                 <label htmlFor={`claim-email-${giftId}`} className="mb-2 block text-sm font-semibold">Email</label>
                 <input id={`claim-email-${giftId}`} type="email" required maxLength={254} autoComplete="email" value={email} onChange={e => { setEmail(e.target.value); if (status === "invalid") setStatus(""); }} className="min-h-12 w-full rounded-xl border border-stone-300 px-4" aria-invalid={status === "invalid"}/>
                 {status === "invalid" && <p role="alert" className="mt-2 text-sm text-red-800">Συμπλήρωσε έγκυρες και διαφορετικές διευθύνσεις email.</p>}
-                <label htmlFor={`claim-co-email-${giftId}`} className="mb-2 mt-4 block text-sm font-semibold">Email ατόμου που θα το αγοράσει μαζί σου (προαιρετικό)</label><input id={`claim-co-email-${giftId}`} type="email" maxLength={254} autoComplete="email" value={coBuyerEmail} onChange={e => { setCoBuyerEmail(e.target.value); if (status === "invalid") setStatus(""); }} className="min-h-12 w-full rounded-xl border border-stone-300 px-4" aria-invalid={status === "invalid"}/>
-                <p className="mt-2 text-xs leading-5 text-[#777b86]">Τα email χρησιμοποιούνται μόνο για την κράτηση και δεν εμφανίζονται στους υπόλοιπους καλεσμένους. Βεβαιώσου ότι ο/η συνοδός συμφωνεί να καταχωρίσεις το email του/της.</p>
+                {!showCoBuyerEmail ? <button type="button" onClick={() => setShowCoBuyerEmail(true)} className="mt-3 min-h-11 text-sm font-medium text-[#625887] underline underline-offset-4 hover:text-[#443966]">Θα το αγοράσω μαζί με κάποιον άλλο</button> : <>
+                  <label htmlFor={`claim-co-email-${giftId}`} className="mb-2 mt-4 block text-sm font-semibold">Email ατόμου που θα το αγοράσει μαζί σου (προαιρετικό)</label>
+                  <input id={`claim-co-email-${giftId}`} type="email" maxLength={254} autoComplete="email" value={coBuyerEmail} onChange={e => { setCoBuyerEmail(e.target.value); if (status === "invalid") setStatus(""); }} className="min-h-12 w-full rounded-xl border border-stone-300 px-4" aria-invalid={status === "invalid"}/>
+                  <p className="mt-2 text-xs leading-5 text-[#777b86]">Τα email χρησιμοποιούνται μόνο για την κράτηση και δεν εμφανίζονται στους υπόλοιπους καλεσμένους. Βεβαιώσου ότι ο/η συνοδός συμφωνεί να καταχωρίσεις το email του/της.</p>
+                  <button type="button" onClick={() => { setShowCoBuyerEmail(false); setCoBuyerEmail(""); }} className="mt-2 min-h-10 text-sm text-[#777b86] underline underline-offset-4">Αφαίρεση δεύτερου email</button>
+                </>}
                 <button type="submit" disabled={status === "loading"} className="mt-5 min-h-12 w-full rounded-full bg-[#8072ad] font-semibold text-white disabled:opacity-60">{status === "loading" ? "Γίνεται κράτηση…" : "Κράτηση δώρου"}</button>
               </form></>}
       </section>
